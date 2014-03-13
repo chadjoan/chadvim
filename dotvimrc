@@ -1,0 +1,329 @@
+" Make navigation wrap around lines.
+set backspace=indent,eol,start
+set whichwrap+=<,>,[,] " Show line numbers.
+set number
+
+" Make backspace act like the 'X' command while in command mode.
+nnoremap <bs> X
+
+" Allow positioning the cursor just past the last character of a line.
+set virtualedit=onemore
+
+" 256-color terminal mode please.
+set t_Co=256
+
+" Make the 80th column highlight.
+set colorcolumn=80
+hi ColorColumn ctermbg=darkgray guibg=darkgray
+
+" Make Visual-Block mode possible in ZOC terminal while using the
+" Ctrl-V paste intercept.
+nnoremap <C-b> <C-v>
+
+" Automatically save the current session when quitting.
+let g:session_autosave = 'yes'
+let g:session_autosave_periodic = 1
+let g:session_autoload = 'yes'
+"let g:session_default_to_last = 1
+
+" Prevent line-wrapping.
+set nowrap
+
+" Keep undo-history between buffer changes.
+" Also allows "editing of modified files", though I'm not sure what that means.
+set hidden
+
+" An example for a vimrc file.
+"
+" Maintainer:   Bram Moolenaar <Bram@vim.org>
+" Last change:  2006 Nov 16
+"
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"             for Amiga:  s:.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"           for OpenVMS:  sys$login:.vimrc
+
+" When started as "evim", evim.vim will already have done these settings.
+if v:progname =~? "evim"
+  finish
+endif
+
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+if has("vms")
+  set nobackup          " do not keep a backup file, use versions instead
+else
+  set backup            " keep a backup file
+endif
+set history=50          " keep 50 lines of command line history
+set ruler               " show the cursor position all the time
+set showcmd             " display incomplete commands
+set incsearch           " do incremental searching
+
+" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
+" let &guioptions = substitute(&guioptions, "t", "", "g")
+
+" Don't use Ex mode, use Q for formatting
+map Q gq
+
+"" In many terminal emulators the mouse works just fine, thus enable it.
+" Except ZOC.  And I use that.
+"set mouse=a
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+"if &t_Co > 2 || has("gui_running")
+"  syntax on
+""  set hlsearch
+"endif
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Enable file type detection.
+  " Use the default filetype settings, so that mail gets 'tw' set to 72,
+  " 'cindent' is on in C files, etc.
+  " Also load indent files, to automatically do language-dependent indenting.
+  "filetype plugin indent on
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  "autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+  augroup END
+
+else
+
+  set autoindent                " always set autoindenting on
+
+endif " has("autocmd")
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+                \ | wincmd p | diffthis
+" vim for hard-tabbers
+set noexpandtab
+set shiftwidth=8
+set tabstop=8
+set softtabstop=8
+set smarttab
+
+" Extra Wyatt Stuff
+"set number "Not sure I like this so much after all...they seem to have the
+set numberwidth=3
+highlight LineNr ctermfg=grey
+" same colour precedence as keywords. :-/
+"
+set whichwrap=b,s,<,>,[,] " What controls autowrapping.  BS, Sp, Left, Right
+set listchars=tab:>\ ,trail:- " Shows tabs and trailing whitespace.
+set sidescrolloff=10 " 10 columns of side-scrolling context
+set cul "Highlight current line
+set wm=0 "Wrap Margin: margin from the right at which to auto-wrap
+set showmatch " Brief jump to matching bracket if on same screen.
+set uc=100 " Characters before updating swapfile
+set ignorecase " Ignore case in search
+set smartcase " Don't ignore case when the search has caps
+set infercase " Fix case of word when using completion
+
+"set smartindent
+set ci " Copy indentation from previous line
+set pi " Preserve kind of whitespace when changing indent
+
+set cinoptions=+4,(0,w1 " Control C indentation a bit better
+set encoding=utf-8
+set foldmethod=indent " fold according to indentation levels
+" set foldmethod=syntax " fold according to syntax blocks.
+set foldminlines=5 " Don't fold things less than 5 lines.  S'not worth the obfuscation.
+" set foldnestmax=3
+set foldlevelstart=9 " open first level of folding at beginning.  Happens before modelines.
+set foldopen=hor " Horizontal movement opens a fold.
+"set foldclose=l " spacebar closes open folds in normal mode
+set scrolloff=2
+"Backup settings; make a backup directory if it doesn't exist in $HOME
+silent execute '!mkdir -p ~/.vimbackup'
+set backupdir=~/.vimbackup
+"perl code folding (may not work all the way)
+let perl_fold = 1
+
+"Remove whitespace at the end of lines before saving
+"au! BufWrite,FileWritePre * call RemoveWhiteSpace()
+
+"All of my terminals are black.  Adjust highlighting accordingly.
+"set background=dark
+let sh_fold_enabled = 1
+
+" Mappings
+" ========
+
+" I never use semicolon anyway
+nnoremap ; :
+
+" For ZW and ZQ. Each is a half of ZZ.
+nmap <S-z><S-w> :w<CR>
+nmap <S-z><S-q> :q<CR>
+
+" For switching buffers
+nnoremap <silent> <F12> :bn<CR>
+nnoremap <silent> <F11> :bp<CR>
+
+nnoremap <silent> <M-Right> :bn<CR>
+nnoremap <silent> <M-Left> :bp<CR>
+
+" Visual mode . to repeat across selected range
+vnoremap . :normal .<CR>
+
+" Toggle numbering
+nnoremap <silent> <leader>n :set number! number?<CR>
+
+" Make comments gray rather than cyan in scripts
+autocmd FileType perl hi Comment ctermfg=gray
+autocmd FileType sh hi Comment ctermfg=gray
+
+"" This doesn't work yet. Why not?
+""syn match myTodo contained "\(BUG\|HACK\)"
+"syn keyword Todo BUG FIXME HACK TODO XXX TBD
+""syn keyword myTodo contained \<\(BUG\|HACK\)
+""syn keyword myTodo contained BUG
+""hi def link myTodo Todo
+"" Automagic screen title setting
+""let &titleold = expand("$HOSTNAME")
+""let &titleold = &titlestring
+
+""set titlestring = %(\ (%{expand(\"%:t\")})%)
+""set titlestring=%(\ %M%)%(\ (%{expand(\"%:t\")})%)
+""set titlestring=%(\ %{expand(\"%:t\")}%)
+""let &titlestring = expand("$HOSTNAME") "(\ (%{expand(\"%:p:h\")})%)%(\ %a%)\ -\ %{v:servername}
+"set t_fs=et t_ts=
+"set title
+
+"autocmd BufEnter * let &titlestring = expand("%:t")
+"au VimLeavePre * silent exec "let &titlestring = &titleold"
+"au VimLeave * set title
+
+""autocmd VimLeave * let &titlestring = expand($HOSTNAME)
+"autocmd VimLeave * silent call ResetTitle()
+""au VimLeave * silent exec "set title t_ts='' t_fs=''"
+""au VimLeave * silent exec '!echo -ne "\033]0;${HOSTNAME}\033"'
+"au VimLeave * silent exec ":!echo -e '\033kbash\033\\'\<CR>"
+
+
+" Functions
+" =========
+
+" Removes superfluous white space from the end of a line
+"function! RemoveWhiteSpace()
+"    :%s/\s*$//g
+"    :'^
+"    "`.
+"endfunction
+
+" This helps reset the title sting when exiting
+"function! ResetTitle()
+"    exec "let &titlestring = expand(\"$HOSTNAME\")"
+"    exec "set title t_ts='' t_fs=''"
+"endfunction
+
+" Plugin stuff
+" ============
+
+call pathogen#infect()
+
+"     MiniBufExpl
+"     -----------
+let g:miniBufExplUseSingleClick = 1
+
+" <C-TAB> and <C-S-TAB> to switch buffers in current window
+noremap <C-TAB> :MBEbn<CR>
+noremap <C-S-TAB> :MBEbp<CR>
+
+" control + arrow key to navigate windows
+noremap <C-Down> <C-W><j>
+noremap <C-Up> <C-W><k>
+noremap <C-Left> <C-W><h>
+noremap <C-Right> <C-W><l>
+
+
+"     vim-airline
+"     -----------
+set laststatus=2 "Always show airline
+set noshowmode
+"let g:airline_powerline_fonts = 1
+
+"     syntastic
+"     ---------
+let g:syntastic_c_check_header = 1
+let g:syntastic_quiet_messages = {'level': 'warnings'}
+"let g:syntastic_error_symbol = 'âœ—'
+
+"     easytags
+"     --------
+let g:easytags_updatetime_warn = 0
+
+"     tagbar
+"     ------
+let g:tagbar_width = 20
+let g:tagbar_left = 1
+let g:tagbar_singleclick = 1
+let g:tagbar_compact = 1
+nmap <F8> :TagbarToggle<CR>
+
+
+"highlight Normal     ctermbg=17
+
+highlight Comment    ctermfg=43  " Light but soft blue-green.
+
+"highlight Constant   ctermfg=178 " Orangish
+"highlight String     ctermfg=190 " Yellow-orange
+"highlight Character  ctermfg=160 " Red-orange
+"highlight Number     ctermfg=14  " Cyan
+"highlight Boolean    ctermfg=15  " White
+"highlight Float      ctermfg=13  " Magenta
+
+highlight Constant   ctermfg=178
+highlight String     ctermfg=190
+highlight Character  ctermfg=166
+highlight Number     ctermfg=105
+highlight Boolean    ctermfg=195
+highlight Float      ctermfg=164
+
+highlight Identifier ctermfg=46  " Light christmas-y green.
+highlight Function   ctermfg=82  " Limey green.
+
+highlight Statement  ctermfg=39  " Brightish blue.
+highlight Repeat     ctermfg=33  " Slightly darker blue.
+highlight Label      ctermfg=47  " Pale green
+highlight Operator   ctermfg=153 " Ivory/blueish/off-white
+highlight Keyword    ctermfg=118 " Bright yellow-green for other keywords.
+highlight Exception  ctermfg=78  " Exceptions are pale-green right?
+
+highlight PreProc    ctermfg=191 " Pasty white-yellow color.
+
+highlight Type       ctermfg=140 " Faded purple.
+highlight StorageClass ctermfg=114 " Desaturated yellow-green.  Think desert camo.
+highlight Structure  ctermfg=176
+highlight Typedef    ctermfg=176
+
+highlight Special    ctermfg=43  " Bright blue.
+highlight Underlined ctermfg=11  " Yellow.
+"highlight Ignore     ctermfg=??
+highlight Error      ctermfg=8   ctermbg=9    " Dark-grey on RED
+highlight Todo       ctermfg=8   ctermbg=11   " Dark-grey on YELLOW
+

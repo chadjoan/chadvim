@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/wyatt/Projects/id3v3/.git'
+let g:netrw_dirhist_2='/home/wyatt/Projects/super-magical-wars/engine/backend'
+let g:netrw_dirhist_3='/home/wyatt/.vim/syntax'
+let g:netrw_dirhist_4='/home/jwe29/Projects/monthlyReports/Scripts'
+let g:netrw_dirhist_5='/opt/cas/bin'
+let g:netrw_dirhist_6='/opt/cas/etc'
+let g:netrw_dirhist_7='/home/jwe29/Projects/Docdatasrv/docdata'
+let g:netrw_dirhist_8='/usr/lib64/clang-analyzer/scan-build'
+let g:netrw_dirhist_9='/home/jwe29/.vim/bundle/cscope/plugin'
