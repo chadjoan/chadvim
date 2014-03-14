@@ -1,3 +1,8 @@
+" For some reason, VIM has a hard time detecting $HOME/_vim on my Windows 7  machine.
+if has('win32') || has('win64')
+    set runtimepath=$HOME/vimfiles,$HOME/_vim,$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/after
+endif
+
 " Make navigation wrap around lines.
 set backspace=indent,eol,start
 set whichwrap+=<,>,[,] " Show line numbers.
@@ -102,7 +107,7 @@ if has("autocmd")
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
+ autocmd BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
@@ -116,9 +121,11 @@ else
 endif " has("autocmd")
 
 " Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+" file it was loaded from, thus the changes you made.i
+if !exists(':DiffOrig')
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
                 \ | wincmd p | diffthis
+endif
 " vim for hard-tabbers
 set noexpandtab
 set shiftwidth=8
@@ -246,6 +253,9 @@ autocmd FileType sh hi Comment ctermfg=gray
 
 call pathogen#infect()
 
+filetype on
+syntax on
+
 "     MiniBufExpl
 "     -----------
 let g:miniBufExplUseSingleClick = 1
@@ -285,10 +295,16 @@ let g:tagbar_singleclick = 1
 let g:tagbar_compact = 1
 nmap <F8> :TagbarToggle<CR>
 
+" Helpful link for color picking:
+" https://github.com/guns/xterm-color-table.vim
 
-"highlight Normal     ctermbg=17
+set background=dark
 
-highlight Comment    ctermfg=43  " Light but soft blue-green.
+"highlight Normal     ctermbg=0    guibg=#ffffff
+highlight Normal     ctermbg=0    guibg=#303030
+highlight Normal     ctermfg=15   guifg=#afafaf
+
+highlight Comment    ctermfg=43   guifg=#00dfaf " Light but soft blue-green.
 
 "highlight Constant   ctermfg=178 " Orangish
 "highlight String     ctermfg=190 " Yellow-orange
@@ -297,33 +313,33 @@ highlight Comment    ctermfg=43  " Light but soft blue-green.
 "highlight Boolean    ctermfg=15  " White
 "highlight Float      ctermfg=13  " Magenta
 
-highlight Constant   ctermfg=178
-highlight String     ctermfg=190
-highlight Character  ctermfg=166
-highlight Number     ctermfg=105
-highlight Boolean    ctermfg=195
-highlight Float      ctermfg=164
+highlight Constant   ctermfg=178  guifg=#dfaf00
+highlight String     ctermfg=190  guifg=#dfff00
+highlight Character  ctermfg=166  guifg=#df5f00
+highlight Number     ctermfg=105  guifg=#8787ff
+highlight Boolean    ctermfg=195  guifg=#dfffff
+highlight Float      ctermfg=164  guifg=#df00df
 
-highlight Identifier ctermfg=46  " Light christmas-y green.
-highlight Function   ctermfg=82  " Limey green.
+highlight Identifier ctermfg=46   guifg=#00ff00 " Light green.
+highlight Function   ctermfg=82   guifg=#5fff00 " Limey green.
 
-highlight Statement  ctermfg=39  " Brightish blue.
-highlight Repeat     ctermfg=33  " Slightly darker blue.
-highlight Label      ctermfg=47  " Pale green
-highlight Operator   ctermfg=153 " Ivory/blueish/off-white
-highlight Keyword    ctermfg=118 " Bright yellow-green for other keywords.
-highlight Exception  ctermfg=78  " Exceptions are pale-green right?
+highlight Statement  ctermfg=39   guifg=#00afff " Brightish blue.
+highlight Repeat     ctermfg=33   guifg=#0087ff " Slightly darker blue.
+highlight Label      ctermfg=47   guifg=#00ff5f " Pale green
+highlight Operator   ctermfg=153  guifg=#afdfff " Ivory/blueish/off-white
+highlight Keyword    ctermfg=118  guifg=#87ff00 " Bright yellow-green for other keywords.
+highlight Exception  ctermfg=78   guifg=#5fdf87 " Exceptions are pale-green right?
 
-highlight PreProc    ctermfg=191 " Pasty white-yellow color.
+highlight PreProc    ctermfg=191  guifg=#dfff5f " Pasty white-yellow color.
 
-highlight Type       ctermfg=140 " Faded purple.
-highlight StorageClass ctermfg=114 " Desaturated yellow-green.  Think desert camo.
-highlight Structure  ctermfg=176
-highlight Typedef    ctermfg=176
+highlight Type       ctermfg=140  guifg=#af87df " Faded purple.
+highlight StorageClass ctermfg=114 guifg=#87df87 " Desaturated yellow-green.  Think desert camo.
+highlight Structure  ctermfg=176  guifg=#df87df
+highlight Typedef    ctermfg=176  guifg=#df87df
 
-highlight Special    ctermfg=43  " Bright blue.
-highlight Underlined ctermfg=11  " Yellow.
+highlight Special    ctermfg=43   guifg=#00dfaf " Bright blue.
+highlight Underlined ctermfg=11   guifg=#ffff00 " Yellow.
 "highlight Ignore     ctermfg=??
-highlight Error      ctermfg=8   ctermbg=9    " Dark-grey on RED
-highlight Todo       ctermfg=8   ctermbg=11   " Dark-grey on YELLOW
+highlight Error      ctermfg=8   ctermbg=9   guifg=#808080 guibg=#ff0000 " Dark-grey on RED
+highlight Todo       ctermfg=8   ctermbg=11  guifg=#808080 guibg=#ffff00 " Dark-grey on YELLOW
 
