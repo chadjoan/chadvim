@@ -1,6 +1,10 @@
-" For some reason, VIM has a hard time detecting $HOME/_vim on my Windows 7  machine.
 if has('win32') || has('win64')
-    set runtimepath=$HOME/vimfiles,$HOME/_vim,$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/after
+  " For some reason, VIM has a hard time detecting $HOME/_vim on my Windows 7  machine.
+  set runtimepath=$HOME/vimfiles,$HOME/_vim,$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/after
+  
+  " Also, source this file to make things behave like some kind of CUA editor.
+  " This makes Ctrl-C copy, Ctrl-V paste, Ctrl-S save, and so on.
+  source $VIMRUNTIME/mswin.vim
 endif
 
 " Make navigation wrap around lines.
@@ -128,9 +132,9 @@ if !exists(':DiffOrig')
 endif
 " vim for hard-tabbers
 set noexpandtab
-set shiftwidth=8
-set tabstop=8
-set softtabstop=8
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
 set smarttab
 
 " Extra Wyatt Stuff
