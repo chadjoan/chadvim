@@ -22,3 +22,6 @@
 [submodule "dotvim/bundle/syntastic"]
 	path = dotvim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+[submodule "dotvim/bundle/vim-misc"]
+	path = dotvim/bundle/vim-misc
+	url = https://github.com/xolox/vim-misc.git
