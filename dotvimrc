@@ -1,3 +1,7 @@
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
 if has('win32') || has('win64')
   " For some reason, VIM has a hard time detecting $HOME/_vim on my Windows 7  machine.
   set runtimepath=$HOME/vimfiles,$HOME/_vim,$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/after
@@ -5,6 +9,30 @@ if has('win32') || has('win64')
   " Also, source this file to make things behave like some kind of CUA editor.
   " This makes Ctrl-C copy, Ctrl-V paste, Ctrl-S save, and so on.
   source $VIMRUNTIME/mswin.vim
+
+  " Not sure why this is a problem in gvim but not in terminal vim, but without
+  " these mappings we would be unable to navigate using arrow keys while in
+  " visual/select mode.
+  vnoremap <Left>  h
+  vnoremap <Right> l
+  vnoremap <Up>    k
+  vnoremap <Down>  j
+
+endif
+
+" Set font to Courier New
+if has("gui_running")
+  if has("gui_gtk2")
+    set guifont=Courier\ New\ 12
+  elseif has("gui_photon")
+    set guifont=Courier\ New:s12
+  elseif has("gui_kde")
+    set guifont=Courier\ New/12/-1/5/50/0/0/0/1/0
+  elseif has("x11")
+    set guifont=-*-courier-medium-r-normal-*-*-180-*-*-m-*-*
+  else
+    set guifont=Courier_New:h11:cDEFAULT
+  endif
 endif
 
 " Make navigation wrap around lines.
@@ -23,7 +51,8 @@ set t_Co=256
 
 " Make the 80th column highlight.
 set colorcolumn=80
-hi ColorColumn ctermbg=darkgray guibg=darkgray
+hi ColorColumn ctermbg=darkgray guibg=#404040
+
 
 " Make Visual-Block mode possible in ZOC terminal while using the
 " Ctrl-V paste intercept.
@@ -57,10 +86,6 @@ set hidden
 if v:progname =~? "evim"
   finish
 endif
-
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
