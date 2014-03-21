@@ -372,3 +372,4 @@ highlight Underlined ctermfg=11   guifg=#ffff00 " Yellow.
 highlight Error      ctermfg=8   ctermbg=9   guifg=#808080 guibg=#ff0000 " Dark-grey on RED
 highlight Todo       ctermfg=8   ctermbg=11  guifg=#808080 guibg=#ffff00 " Dark-grey on YELLOW
 
+highlight Search     ctermfg=195 ctermbg=23  guifg=#ffffff guibg=#005f5f
