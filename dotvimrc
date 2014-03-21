@@ -35,6 +35,13 @@ if has("gui_running")
   endif
 endif
 
+" No backups on windows/gvim.
+" They never work, and cause quite the annoyance.
+" Maybe it's because I'm using CIFs shares a lot.
+if has("win32") || has("win64")
+  set nobackup
+endif
+
 " Make navigation wrap around lines.
 set backspace=indent,eol,start
 set whichwrap+=<,>,[,] " Show line numbers.
