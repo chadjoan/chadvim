@@ -84,6 +84,7 @@ syn cluster     dblAllSpace add=dblDefine
 " Storage classes.
 syn keyword dblStorageClass in out inout req required opt optional static ref
 syn keyword dblStorageClass private public protected abstract stack const
+syn keyword dblStorageClass sealed override external endexternal
 syn cluster dblFuncElems add=dblStorageClass
 
 " identifier
@@ -167,15 +168,16 @@ syn match   dblDataVarDecl "^\s*data\s\+\h[a-zA-Z_$0-9]*\s*,\s*\(;\|$\)\@!" next
 " Writing a basic DBL grammar in vimscript seems very hard... things like
 " records can end in statements besides "endrecord", and comments and .if 0
 " can all derail matches.  Consider these things before getting ambitious.
-syn keyword dblStructure     record    common    literal    group    enum    global  contained
+syn keyword dblStructure     record    common    literal    group    enum    global    contained
 syn keyword dblStructure     endrecord endcommon endliteral endgroup endenum endglobal endparams
+syn keyword dblStructure     namespace endnamespace
 syn keyword dblStructure     property endproperty " Properties contain methods and are in class-context, so the region-based highlighting should be already-handled by the class/method/proc rules.
 syn keyword dblStructure     extends
 syn keyword dblStatement     endsubroutine endmain endfunction endmethod endelegate " Just-incase these are missed by the region...
 syn cluster dblVarDeclSpace  contains=dblVarDecl,@dblAllSpace,@dblLiterals
 syn region  dblVarDeclScope  matchgroup=dblStructure start="\<structure\>" end="\<endstructure\>" contains=@dblVarDeclSpace,dblVarDeclScope fold keepend
 syn region  dblClassScope    matchgroup=dblStructure start="\<class\>"     end="\<endclass\>" contains=@dblVarDeclSpace,dblVarDeclScope,dblFuncScope,dblStructure fold keepend
-syn region  dblFuncScope     start="^.*\<method\|function\|subroutine\|delegate\>"   end="\<\(endsubroutine\|endfunction\|endmethod\|enddelegate\)\>" contains=@dblVarDeclSpace,@dblFuncElems,dblVarDeclScope,dblProcScope fold keepend
+syn region  dblFuncScope     start="^[^;]*\<\(method\|function\|subroutine\|delegate\)\>"   end="\<\(endsubroutine\|endfunction\|endmethod\|enddelegate\)\>" contains=@dblVarDeclSpace,@dblFuncElems,dblVarDeclScope,dblStructure,dblProcScope fold keepend
 syn region  dblVarDeclScope  matchgroup=dblStructure start="\<global\>"    end="\(\<\(record\|common\|global\|literal\|proc\|endglobal\)\>\)\@="  contains=@dblVarDeclSpace,dblGroupScope fold
 syn region  dblVarDeclScope  matchgroup=dblStructure start="\<common\>"    end="\(\<\(record\|common\|global\|literal\|proc\|endcommon\)\>\)\@="  contains=@dblVarDeclSpace,dblGroupScope fold
 syn region  dblVarDeclScope  matchgroup=dblStructure start="\<record\>"    end="\(\<\(record\|common\|global\|literal\|proc\|endrecord\)\>\)\@="  contains=@dblVarDeclSpace,dblGroupScope fold
@@ -184,10 +186,10 @@ syn region  dblGroupScope    matchgroup=dblStructure start="\<group\>"     end="
 syn region  dblProcScope     matchgroup=dblStatement start="\<proc\>"      end="\<\(endsubroutine\|endmain\|endfunction\|endmethod\)\>"   contains=TOP,dblVarDecl fold keepend
 
 syntax sync match dblClassScope   groupthere dblClassScope   "\<class\>"
-syntax sync match dblVarDeclScope groupthere dblVarDeclScope "\<structure\|record\|common\|literal\>"
+syntax sync match dblVarDeclScope groupthere dblVarDeclScope "\<\(structure\|record\|common\|literal\)\>"
 syntax sync match dblGroupScope   groupthere dblGroupScope   "\<group\>"
 syntax sync match dblProcScope    groupthere dblProcScope    "\<proc\>"
-"syntax sync match dblSync groupthere NONE "\<class\|structure\|record\|common\|literal\|group\|proc\>"
+"syntax sync match dblSync groupthere NONE "\<\(class\|structure\|record\|common\|literal\|group\|proc\)\>"
 
 " Plug it all in.
 hi def link dblVarDeclScope     Normal
