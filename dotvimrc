@@ -10,6 +10,9 @@ if has('win32') || has('win64')
   " This makes Ctrl-C copy, Ctrl-V paste, Ctrl-S save, and so on.
   source $VIMRUNTIME/mswin.vim
 
+  " But make sure it that unix fileformat is the default.
+  set fileformats=unix,dos
+
   " Not sure why this is a problem in gvim but not in terminal vim, but without
   " these mappings we would be unable to navigate using arrow keys while in
   " visual/select mode.
@@ -104,6 +107,8 @@ set t_Co=256
 set colorcolumn=80
 hi ColorColumn ctermbg=darkgray guibg=#404040
 
+" Spell checking in comments.
+setlocal spell spelllang=en_us
 
 " Make Visual-Block mode possible in ZOC terminal while using the
 " Ctrl-V paste intercept.
@@ -121,6 +126,22 @@ set nowrap
 " Keep undo-history between buffer changes.
 " Also allows "editing of modified files", though I'm not sure what that means.
 set hidden
+
+" Better page-up/page-down behavior, like other text editors.
+" This keeps the cursor in the same position (usually) after pgup-pgdn or
+" pgdn-pgup, thus making it once again easy to do quick up/down scans of code.
+" Taken from http://vim.wikia.com/wiki/Page_up/down_and_keep_cursor_position
+nnoremap <silent> <PageUp> <C-U><C-U>
+vnoremap <silent> <PageUp> <C-U><C-U>
+inoremap <silent> <PageUp> <C-\><C-O><C-U><C-\><C-O><C-U>
+
+nnoremap <silent> <PageDown> <C-D><C-D>
+vnoremap <silent> <PageDown> <C-D><C-D>
+inoremap <silent> <PageDown> <C-\><C-O><C-D><C-\><C-O><C-D>
+
+" Also, maintain the cursor's x-position when doing pgup/pgdown.
+" See: http://stackoverflow.com/questions/8292742/vim-cursor-jumps-to-begining-of-the-line-after-buffer-switch
+set nostartofline
 
 " An example for a vimrc file.
 "
@@ -202,11 +223,15 @@ if !exists(':DiffOrig')
                 \ | wincmd p | diffthis
 endif
 " vim for hard-tabbers
-set noexpandtab
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set smarttab
+function! SetHardTabs()
+  set noexpandtab
+  set shiftwidth=4
+  set tabstop=4
+  set softtabstop=4
+  set smarttab
+endfunction
+
+call SetHardTabs()
 
 " Extra Wyatt Stuff
 "set number "Not sure I like this so much after all...they seem to have the
@@ -366,6 +391,9 @@ let g:tagbar_left = 1
 let g:tagbar_singleclick = 1
 let g:tagbar_compact = 1
 nmap <F8> :TagbarToggle<CR>
+
+" From http://vim.wikia.com/wiki/Fix_syntax_highlighting
+autocmd BufEnter * :syntax sync fromstart
 
 " Helpful link for color picking:
 " https://github.com/guns/xterm-color-table.vim
