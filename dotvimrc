@@ -392,8 +392,11 @@ let g:tagbar_singleclick = 1
 let g:tagbar_compact = 1
 nmap <F8> :TagbarToggle<CR>
 
-" From http://vim.wikia.com/wiki/Fix_syntax_highlighting
-autocmd BufEnter * :syntax sync fromstart
+"" From http://vim.wikia.com/wiki/Fix_syntax_highlighting
+"          ^^ Didn't work
+" Instead, it seems to be more beneficial (at least for DBL) to simply
+" clear the synchronization settings.
+autocmd BufEnter * syntax sync clear
 
 " Helpful link for color picking:
 " https://github.com/guns/xterm-color-table.vim
