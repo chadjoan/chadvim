@@ -47,7 +47,7 @@ syn cluster     dblAllSpace add=dblPreCondit,dblPreConditMatch
 if !exists("dbl_no_if0")
   syn cluster   dblppOutInGroup  contains=dblppInIf,dblppInElse,dblppInElse2,dblppOutIf,dblppOutIf2,dblppOutElse,dblppInSkip,dblppOutSkip
   syn region    dblppOutWrapper  start="^\s*\.\s*if\s\+0\+\s*\($\|;\)" end=".\@=\|$" contains=dblppOutIf,dblppOutElse
-  syntax sync match dblppOutWrapper groupthere dblppOutWrapper "^\s*\.\s*if\s\+0"
+  "syntax sync match dblppOutWrapper groupthere dblppOutWrapper "^\s*\.\s*if\s\+0"
   syn cluster   dblAllSpace add=dblppOutInGroup,dblppOutWrapper
   syn region    dblppOutIf       contained start="0\+" matchgroup=dblppOutWrapper end="^\s*\.\s*endc\>" contains=dblppOutIf2,dblppOutElse
   if !exists("dbl_no_if0_fold")
@@ -185,11 +185,11 @@ syn region  dblVarDeclScope  matchgroup=dblStructure start="\<literal\>"   end="
 syn region  dblGroupScope    matchgroup=dblStructure start="\<group\>"     end="\<endgroup\>" contains=@dblVarDeclSpace,dblVarDeclScope,dblGroupScope fold keepend
 syn region  dblProcScope     matchgroup=dblStatement start="\<proc\>"      end="\<\(endsubroutine\|endmain\|endfunction\|endmethod\)\>"   contains=TOP,dblVarDecl fold keepend
 
-syntax sync match dblClassScope   groupthere dblClassScope   "\<class\>"
-syntax sync match dblVarDeclScope groupthere dblVarDeclScope "\<\(structure\|record\|common\|literal\)\>"
-syntax sync match dblGroupScope   groupthere dblGroupScope   "\<group\>"
-syntax sync match dblProcScope    groupthere dblProcScope    "\<proc\>"
-"syntax sync match dblSync groupthere NONE "\<\(class\|structure\|record\|common\|literal\|group\|proc\)\>"
+"syntax sync match dblClassScope   groupthere dblClassScope   "\<class\>"
+"syntax sync match dblVarDeclScope groupthere dblVarDeclScope "\<\(structure\|record\|common\|literal\)\>"
+"syntax sync match dblGroupScope   groupthere dblGroupScope   "\<group\>"
+"syntax sync match dblProcScope    groupthere dblProcScope    "\<proc\>"
+""syntax sync match dblSync groupthere NONE "\<\(class\|structure\|record\|common\|literal\|group\|proc\)\>"
 
 " Plug it all in.
 hi def link dblVarDeclScope     Normal
@@ -259,6 +259,7 @@ hi def link dblppOut2           dblppOut      " Old syntax group for #if of #if 
 hi def link dblppOut            Comment
 hi def link dblComment          Comment
 
+syntax sync clear
 
 " Set the current syntax to be known as dbl
 let b:current_syntax = "dbl"
