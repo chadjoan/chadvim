@@ -376,8 +376,8 @@ set noshowmode
 
 "     syntastic
 "     ---------
-let g:syntastic_c_check_header = 1
-let g:syntastic_quiet_messages = {'level': 'warnings'}
+"let g:syntastic_c_check_header = 1
+"let g:syntastic_quiet_messages = {'level': 'warnings'}
 "let g:syntastic_error_symbol = 'âœ—'
 
 "     easytags
