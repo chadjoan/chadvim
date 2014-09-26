@@ -392,6 +392,9 @@ let g:tagbar_singleclick = 1
 let g:tagbar_compact = 1
 nmap <F8> :TagbarToggle<CR>
 
+" Highlight all instances of the current search term.
+set hlsearch
+
 "" From http://vim.wikia.com/wiki/Fix_syntax_highlighting
 "          ^^ Didn't work
 " Instead, it seems to be more beneficial (at least for DBL) to simply
