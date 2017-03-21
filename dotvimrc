@@ -109,6 +109,7 @@ hi ColorColumn ctermbg=darkgray guibg=#404040
 
 " Spell checking in comments.
 setlocal spell spelllang=en_us
+autocmd BufEnter * syntax spell notoplevel
 
 " Make Visual-Block mode possible in ZOC terminal while using the
 " Ctrl-V paste intercept.
@@ -423,10 +424,10 @@ highlight clear SpellBad
 highlight clear SpellCap
 highlight clear SpellRare
 highlight clear SpellLocal
-highlight SpellBad    term=standout  ctermfg=9  gui=undercurl guisp=Red
-highlight SpellCap    term=underline ctermfg=12 gui=undercurl guisp=Blue
-highlight SpellRare   term=underline ctermfg=13 gui=undercurl guisp=Magenta
-highlight SpellLocal  term=underline ctermfg=14 gui=undercurl guisp=Cyan
+highlight SpellBad    term=standout  ctermfg=167 gui=undercurl guisp=Red
+highlight SpellCap    term=underline ctermfg=38  gui=undercurl guisp=Blue
+highlight SpellRare   term=underline ctermfg=134 gui=undercurl guisp=Magenta
+highlight SpellLocal  term=underline ctermfg=14  gui=undercurl guisp=Cyan
 
 " Default spell checker highlights:
 " highlight SpellBad    term=reverse ctermbg=9 gui=undercurl guisp=Red
