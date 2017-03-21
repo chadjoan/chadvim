@@ -415,6 +415,30 @@ highlight Normal     ctermfg=15   guifg=#dfdfdf
 
 highlight Comment    ctermfg=43   guifg=#00dfaf " Light but soft blue-green.
 
+" Change the highlighter for the spell checker:
+" these are obnoxious by default, which would make sense if we didn't have
+" an enormous amount of false-positives (ex: keywords in comments register
+" as mispellings).
+highlight clear SpellBad
+highlight clear SpellCap
+highlight clear SpellRare
+highlight clear SpellLocal
+highlight SpellBad    term=standout  ctermfg=9  gui=undercurl guisp=Red
+highlight SpellCap    term=underline ctermfg=12 gui=undercurl guisp=Blue
+highlight SpellRare   term=underline ctermfg=13 gui=undercurl guisp=Magenta
+highlight SpellLocal  term=underline ctermfg=14 gui=undercurl guisp=Cyan
+
+" Default spell checker highlights:
+" highlight SpellBad    term=reverse ctermbg=9 gui=undercurl guisp=Red
+" highlight SpellCap    term=reverse ctermbg=12 gui=undercurl guisp=Blue
+" highlight SpellRare   term=reverse ctermbg=13 gui=undercurl guisp=Magenta
+" highlight SpellLocal  term=underline ctermbg=14 gui=undercurl guisp=Cyan
+"
+" These can be found by typing things like ":highlight SpellBad", which will
+" cause Vim to echo the current values for that highlighter.  To get the
+" defaults you will have to avoid running any code that alters the
+" highlighters, of course.
+
 "highlight Constant   ctermfg=178 " Orangish
 "highlight String     ctermfg=190 " Yellow-orange
 "highlight Character  ctermfg=160 " Red-orange
