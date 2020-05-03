@@ -103,10 +103,6 @@ set virtualedit=onemore
 " 256-color terminal mode please.
 set t_Co=256
 
-" Make the 80th column highlight.
-set colorcolumn=80
-hi ColorColumn ctermbg=darkgray guibg=#404040
-
 " Spell checking in comments.
 setlocal spell spelllang=en_us
 autocmd BufEnter * syntax spell notoplevel
@@ -243,7 +239,6 @@ highlight LineNr ctermfg=grey
 set whichwrap=b,s,<,>,[,] " What controls autowrapping.  BS, Sp, Left, Right
 set listchars=tab:>\ ,trail:- " Shows tabs and trailing whitespace.
 set sidescrolloff=10 " 10 columns of side-scrolling context
-set cul "Highlight current line
 set wm=0 "Wrap Margin: margin from the right at which to auto-wrap
 set showmatch " Brief jump to matching bracket if on same screen.
 set uc=100 " Characters before updating swapfile
@@ -406,6 +401,15 @@ autocmd BufEnter * syntax sync clear
 " https://github.com/guns/xterm-color-table.vim
 
 set background=dark
+
+" Make the 80th column highlight.
+set colorcolumn=80
+highlight ColorColumn ctermbg=darkgray guibg=#404040
+
+" Make cursor's line have a background highlight of dark gray.
+set cursorline
+highlight CursorLine cterm=none ctermbg=17 guibg=#404040
+highlight Cursor     ctermfg=white guibg=#FFFFFF
 
 " Differences between the cterm colors and gui colors on the "Normal" highlight
 " are intentional.  The xterm256 palette doesn't allow for the deeper dark
