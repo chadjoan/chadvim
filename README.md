@@ -10,6 +10,7 @@ cd ~/
 git clone https://github.com/chadjoan/chadvim
 cd chadvim
 git submodule update
+cd ~/
 ln -s chadvim/dotvim .vim
 ln -s chadvim/dotvimrc .vimrc
 ```
