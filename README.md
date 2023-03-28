@@ -9,7 +9,7 @@ Vim plugins and configuration.
 cd ~/
 git clone https://github.com/chadjoan/chadvim
 cd chadvim
-git submodule update
+git submodule update --init
 cd ~/
 ln -s chadvim/dotvim .vim
 ln -s chadvim/dotvimrc .vimrc
