@@ -1,6 +1,6 @@
 [submodule "dotvim/bundle/vim-airline"]
 	path = dotvim/bundle/vim-airline
-	url = https://github.com/bling/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
 [submodule "dotvim/bundle/SimpylFold"]
 	path = dotvim/bundle/SimpylFold
 	url = https://github.com/tmhedberg/SimpylFold.git
