@@ -358,10 +358,53 @@ noremap <C-TAB> :MBEbn<CR>
 noremap <C-S-TAB> :MBEbp<CR>
 
 " control + arrow key to navigate windows
-noremap <C-Down> <C-W><j>
-noremap <C-Up> <C-W><k>
-noremap <C-Left> <C-W><h>
-noremap <C-Right> <C-W><l>
+noremap <C-Down>   <C-W><j>
+noremap <C-Up>     <C-W><k>
+"noremap <C-Left>  <C-W><h>  <- Reserved for navigating one word at a time
+"noremap <C-Right> <C-W><l>  <- ditto
+
+" Ctrl-Z   -> Undo
+inoremap <C-z>  <C-o>u
+
+" Ctrl-R   -> Redo  (normally works in normal mode only, but this makes it work in insert mode as well)
+inoremap <C-r>  <C-o><C-r>
+
+if has("gui_running")
+  " Ctrl-Backspace -> Delete to beginning of current word
+  " Ctrl-Del -> Delete to end of current word
+  " TODO: Test/implement these when I have GVim available.
+else
+  " Ctrl-Backspace -> Delete to beginning of current word
+  " Unfortunately, this one has some _complications_:
+  "inoremap ^H          <C-o>db  <- On Konsole this is `Ctrl-backspace`. On XTerm, it is just `Backspace`
+  "inoremap ^?          <C-o>db  <- On XTerm this is `Ctrl-backspace`. On Konsole, it is just `Backspace`
+  "inoremap <C-BS>      <C-o>db  <- doesn't work
+  " (Ironically, the comment in the default.keytab suggests that they are mirroring XTerm behavior!)
+  " So we use a special .keytab in Konsole to get this behavior:
+  inoremap  <Esc>[1;5X  <C-o>db
+  " This won't work in `xterm` of course, but I don't use `xterm`, so that's OK.
+  " I just don't want to break `xterm` by making normal `backspace` do something
+  " surprising if I happen to be editing from `xterm`.
+  " (Likewise, I don't want to break vanilla Konsole installs, either.)
+
+  " Note that if you try to use the mappings with "^H" and "^?" in the above
+  " examples, they won't work. An identical-looking (but also working) command
+  " can be created by going into insert mode, hitting Ctrl-V, then pressing
+  " the backspace (or Ctrl-backspace, or Ctrl-H, or whatever) key. This places
+  " the raw character into the current file, and VIM renders it as something
+  " like "^H" or "^?". Now, I don't want raw control codes in my `.vimrc`, so
+  " I faked the earlier ones.
+  " If you want to hexadecimal to refer to incoming input, then something
+  " like this works too:
+  "inoremap <Char-0x08> <C-o>db  " means the same thing as `inoremap ^H <C-o>db
+  "inoremap <Char-0x7f> <C-o>db  " means the same thing as `inoremap ^? <C-o>db
+
+  " Ctrl-Del -> Delete to end of current word
+  inoremap  <Esc>[3;5~  <C-o>dw
+  "inoremap <C-Del>     <C-o>dw  <- doesn't work
+  "inoremap <C-Delete>  <C-o>dw  <- also no
+endif
+
 
 
 "     vim-airline
