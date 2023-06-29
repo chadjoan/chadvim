@@ -347,6 +347,8 @@ autocmd FileType sh hi Comment ctermfg=gray
 call pathogen#infect()
 
 filetype on
+filetype plugin on
+filetype indent on
 syntax on
 
 "     MiniBufExpl
