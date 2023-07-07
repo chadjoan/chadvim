@@ -230,7 +230,7 @@ endfunction
 
 call SetHardTabs()
 
-" Extra Wyatt Stuff
+" Extra Willow Stuff
 "set number "Not sure I like this so much after all...they seem to have the
 set numberwidth=3
 highlight LineNr ctermfg=grey
@@ -356,14 +356,51 @@ syntax on
 let g:miniBufExplUseSingleClick = 1
 
 " <C-TAB> and <C-S-TAB> to switch buffers in current window
+" (NOTE: Konsole uses this to switch the prev/next tab/session.)
 noremap <C-TAB> :MBEbn<CR>
 noremap <C-S-TAB> :MBEbp<CR>
 
+" The "navigate windows" function has been removed because fast non-modal
+" navigation is more useful.
 " control + arrow key to navigate windows
-noremap <C-Down>   <C-W><j>
-noremap <C-Up>     <C-W><k>
+"noremap <C-Down>   <C-W><j>
+"noremap <C-Up>     <C-W><k>
 "noremap <C-Left>  <C-W><h>  <- Reserved for navigating one word at a time
 "noremap <C-Right> <C-W><l>  <- ditto
+
+" Ctrl + arrow key to skip a word at a time.
+" When applied to up/down, this just moves one line like normal.
+" (Which is intentional, because it is often helpful to be able to move
+" left/right a word at a time, then move up and down by a line without
+" having to take the finger off of the Ctrl key.)
+noremap <C-Down>  j
+noremap <C-Up>    k
+noremap <C-Left>  b
+noremap <C-Right> w
+
+inoremap <C-Down>  <C-o>j
+inoremap <C-Up>    <C-o>k
+inoremap <C-Left>  <C-o>b
+inoremap <C-Right> <C-o>w
+
+" Ctrl+Shift + arrow to skip by "WORDs" instead of "words". (So, any
+" non-blank sequence, and not just to the next word boundary.)
+noremap <C-S-Down>  j
+noremap <C-S-Up>    k
+noremap <C-S-Left>  B
+noremap <C-S-Right> W
+
+inoremap <C-S-Down>  <C-o>j
+inoremap <C-S-Up>    <C-o>k
+inoremap <C-S-Left>  <C-o>B
+inoremap <C-S-Right> <C-o>W
+
+
+" Full-selection indent/de-indent like we have in other text editors.
+" And because of the `gv`, this will not leave visual mode and lose the
+" selection like what would happen if we just pressed `<` or `>` in V mode.
+vnoremap <Tab>    >gv
+vnoremap <S-Tab>  <gv
 
 " Ctrl-Z   -> Undo
 inoremap <C-z>  <C-o>u
